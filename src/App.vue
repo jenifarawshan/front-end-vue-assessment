@@ -12,6 +12,9 @@ export default {
 </script>
 
 <style scoped>
+@import 'bootstrap/dist/css/bootstrap.css';
+@import 'bootstrap-vue/dist/bootstrap-vue.css';
+
 .welcome-message {
   position: absolute;
   top: 50%;
