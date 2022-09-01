@@ -15,7 +15,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 @import 'bootstrap/dist/css/bootstrap.css';
 @import 'bootstrap-vue/dist/bootstrap-vue.css';
+@import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css';
 </style>

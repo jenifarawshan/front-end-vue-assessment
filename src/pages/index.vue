@@ -1,30 +1,32 @@
 <template>
-  <b-container fluid class="position-absolute top-50 start-50">
+  <b-container fluid class="d-flex h-100 justify-content-center align-items-center">
+    <SideBar />
     <b-row>
       <b-col class="text-center">
-        <CTAButton />
+        <CTAButton :action="openSideBar" />
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
+import store from '@/store';
+import SideBar from '@/components/SideBar.vue';
 import CTAButton from '@/components/buttons/CTAButton.vue';
 
 export default {
   name: 'IndexPage',
   components: {
-    CTAButton
+    CTAButton,
+    SideBar
+  },
+  methods: {
+    openSideBar() {
+      store.commit('openSideBar');
+    }
   }
 };
 </script>
 
 <style scoped>
-.container-fluid {
-  transform: translate(-50%, -50%);
-  color: #ffda30;
-  font-size: 5rem;
-  margin: 0;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
 </style>
