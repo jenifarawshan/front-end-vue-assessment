@@ -1,27 +1,29 @@
 <template>
   <div>
     <b-sidebar v-model="isOpen" right :title="title" width="576px">
-
       <template #header>
         <b-container fluid :style="style.header">
           <h2 v-text="title" />
           <p v-text="subtitle" />
           <vue-slick-carousel v-bind="carousel">
             <div
-              v-for="item, index in itemList"
+              v-for="(item, index) in itemList"
               :key="index"
               class="carousel-img-wrapper px-1 overflow-hidden"
             >
-              <b-img
-                :src="item.imageUrl"
-                :alt="item.title"
-                fluid
-              />
+              <b-img :src="item.imageUrl" :alt="item.title" fluid />
             </div>
           </vue-slick-carousel>
         </b-container>
       </template>
 
+      <SideBarMultiSelectPage
+        v-if="currentPage.selectionType === 'multi'"
+        :cardList="currentPage.cards"
+        :cardFontColor="currentPage.cardFontColor"
+        :cardBackgroundColor="currentPage.cardBackgroundColor"
+        :cardSelectedBorderColor="currentPage.selectedBorderColor"
+      />
     </b-sidebar>
   </div>
 </template>
@@ -30,12 +32,13 @@
 import store from '@/store';
 import config from '@/../configs/config.json';
 import VueSlickCarousel from 'vue-slick-carousel';
-import 'vue-slick-carousel/dist/vue-slick-carousel.css';
+import SideBarMultiSelectPage from '@/components/sidebar/pages/MultiSelectPage.vue';
 
 export default {
   name: 'SideBar',
   components: {
     VueSlickCarousel,
+    SideBarMultiSelectPage,
   },
   computed: {
     isOpen: {
@@ -91,10 +94,11 @@ export default {
   padding: 0;
 }
 
-::v-deep .slick-prev, ::v-deep .slick-next {
+::v-deep .slick-prev,
+::v-deep .slick-next {
   background: white;
-    z-index: 99;
-    border-radius: 50%;
+  z-index: 99;
+  border-radius: 50%;
 }
 
 ::v-deep .slick-prev {
@@ -102,22 +106,23 @@ export default {
 }
 
 ::v-deep .slick-next {
-    right: -7px;
+  right: -7px;
 }
 
 ::v-deep .slick-prev:before {
-    content: '￩';
+  content: '￩';
 }
 
 ::v-deep .slick-next:before {
-    content: '￫';
+  content: '￫';
 }
 
-::v-deep .slick-prev:before, ::v-deep .slick-next:before {
-    color: rgb(199, 161, 122);
+::v-deep .slick-prev:before,
+::v-deep .slick-next:before {
+  color: rgb(199, 161, 122);
 }
 
 .carousel-img-wrapper {
-  border-radius: 12px
+  border-radius: 12px;
 }
 </style>
