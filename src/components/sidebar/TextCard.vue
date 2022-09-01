@@ -48,22 +48,20 @@ export default {
       type: String,
     },
   },
-  data() {
-    return {
-      style: {
-        height: '150px',
-        color: this.color,
-        borderRadius: '12px',
-        borderColor: this.selectedBorderColor,
-        borderStyle: 'solid',
-        borderWidth: '1px',
-      },
-    };
-  },
   computed: {
     ...mapGetters(['getItemList']),
     isItemAlreadyAdded() {
       return this.getItemList.find((x) => x.title === this.title);
+    },
+    style() {
+      return {
+        height: '150px',
+        color: this.color,
+        borderRadius: '12px',
+        borderColor: this.isItemAlreadyAdded ? this.selectedBorderColor : '#E0E0E0',
+        borderStyle: 'solid',
+        borderWidth: this.isItemAlreadyAdded ? '2px' : '1px',
+      };
     },
   },
 };
