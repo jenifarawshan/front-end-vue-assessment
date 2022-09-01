@@ -2,6 +2,9 @@
   <div>
 
     <b-sidebar v-model="isOpen" right :title="title" width="576px">
+
+      <b-button @click="close" :style="style.closeButton">Close</b-button>
+
       <template #header>
         <b-container fluid :style="style.header">
           <h2 v-text="title" />
@@ -133,6 +136,21 @@ export default {
           backgroundColor: config.flow.carousel.backgroundColor,
           fontFamily: config.flow.carousel.fontFamily,
         },
+        closeButton: {
+          color: config.flow.carousel.color,
+          backgroundColor: config.flow.carousel.backgroundColor,
+          fontFamily: config.flow.carousel.fontFamily,
+          border: 'none',
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+          height: '56px',
+          width: '140px',
+          position: 'absolute',
+          top: '50%',
+          left: '-98px',
+          transform: 'rotate(-90deg)',
+          zIndex: -1,
+        },
         footer: {
           skipButton: {
             color: config.flow.pages[this.currentPageNumber - 1].footer.skipButton.color,
@@ -193,6 +211,9 @@ export default {
     restart() {
       this.currentPageNumber = 1;
       store.commit('clearAllItems');
+    },
+    close() {
+      store.commit('closeSideBar');
     },
   },
 };
