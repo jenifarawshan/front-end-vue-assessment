@@ -35,6 +35,9 @@ export default new Vuex.Store({
     removeItem(state, item) {
       state.itemList = state.itemList.filter((x) => x.title !== item.title);
     },
+    clearAllItems(state) {
+      state.itemList = [];
+    },
   },
   actions: {
   },

@@ -37,7 +37,22 @@
         <b-container>
           <b-row>
             <b-col>
-              <b-btn lg variant="outline" class="restart-button">Restart</b-btn>
+              <b-btn
+                lg
+                v-if="currentPageNumber === 1"
+                variant="outline"
+                class="skip-button"
+                @click="goToNextPage()"
+                >Skip</b-btn
+              >
+              <b-btn
+                lg
+                v-if="currentPageNumber > 1"
+                variant="outline"
+                class="restart-button"
+                @click="restart()"
+                >Restart</b-btn
+              >
             </b-col>
             <b-col class="d-flex justify-content-end">
               <b-btn lg v-if="currentPageNumber > 1" class="back-button" @click="goToPrevPage()"
@@ -123,6 +138,10 @@ export default {
         this.currentPageNumber += 1;
       }
     },
+    restart() {
+      this.currentPageNumber = 1;
+      store.commit('clearAllItems');
+    },
   },
 };
 </script>
@@ -184,6 +203,11 @@ export default {
 
 .btn:focus {
   box-shadow: none;
+}
+
+.skip-button {
+  color: rgb(199, 161, 122);
+  border: none;
 }
 
 .restart-button {
