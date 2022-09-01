@@ -26,21 +26,27 @@
       />
 
       <template #footer>
-
         <b-container>
           <b-row>
             <b-col>
               <b-btn lg variant="outline" class="restart-button">Restart</b-btn>
             </b-col>
             <b-col class="d-flex justify-content-end">
-              <b-btn lg v-if="currentPageNumber > 1" class="back-button">Back</b-btn>
-              <b-btn lg v-if="currentPageNumber < totalPageNumber" class="next-button">Next</b-btn>
+              <b-btn lg v-if="currentPageNumber > 1" class="back-button" @click="goToPrevPage()"
+                >Back</b-btn
+              >
+              <b-btn
+                lg
+                v-if="currentPageNumber < totalPageNumber"
+                class="next-button"
+                @click="goToNextPage()"
+                >Next</b-btn
+              >
               <b-btn lg v-else class="submit-button">Submit</b-btn>
             </b-col>
           </b-row>
         </b-container>
       </template>
-
     </b-sidebar>
   </div>
 </template>
@@ -96,6 +102,18 @@ export default {
     totalPageNumber: config.flow.pages.length,
     currentPageNumber: 1,
   }),
+  methods: {
+    goToPrevPage() {
+      if (this.currentPageNumber > 1) {
+        this.currentPageNumber -= 1;
+      }
+    },
+    goToNextPage() {
+      if (this.currentPageNumber < this.totalPageNumber) {
+        this.currentPageNumber += 1;
+      }
+    },
+  },
 };
 </script>
 
@@ -147,7 +165,7 @@ export default {
 ::v-deep .b-sidebar-footer {
   height: 70px;
   padding: 15px 20px;
-  border-top: 1px solid #E0E0E0;
+  border-top: 1px solid #e0e0e0;
 }
 
 .btn {
