@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <b-sidebar v-model="isOpen" right :title="title" width="576px">
       <template #header>
         <b-container fluid :style="style.header">
@@ -42,6 +43,7 @@
                 v-if="currentPageNumber === 1"
                 variant="outline"
                 class="skip-button"
+                :style="style.footer.skipButton"
                 @click="goToNextPage()"
                 >Skip</b-btn
               >
@@ -49,23 +51,28 @@
                 lg
                 v-if="currentPageNumber > 1"
                 variant="outline"
-                class="restart-button"
+                :style="style.footer.restartButton"
                 @click="restart()"
                 >Restart</b-btn
               >
             </b-col>
             <b-col class="d-flex justify-content-end">
-              <b-btn lg v-if="currentPageNumber > 1" class="back-button" @click="goToPrevPage()"
+              <b-btn
+                lg
+                v-if="currentPageNumber > 1"
+                class="back-button"
+                :style="style.footer.backButton"
+                @click="goToPrevPage()"
                 >Back</b-btn
               >
               <b-btn
                 lg
                 v-if="currentPageNumber < totalPageNumber"
-                class="next-button"
+                :style="style.footer.nextButton"
                 @click="goToNextPage()"
                 >Next</b-btn
               >
-              <b-btn lg v-else class="submit-button">Submit</b-btn>
+              <b-btn lg v-else :style="style.footer.submitButton">Submit</b-btn>
             </b-col>
           </b-row>
         </b-container>
@@ -88,6 +95,19 @@ export default {
     SideBarSingleSelectPage,
     SideBarMultiSelectPage,
   },
+  data: () => ({
+    carousel: {
+      focusOnSelect: true,
+      infinite: true,
+      slidesToShow: 3,
+      slidesToScroll: 3,
+    },
+    title: config.flow.carousel.defaultTitle,
+    subtitle: `Total Item ${config.flow.carousel.defaultContent.length}`,
+    itemList: config.flow.carousel.defaultContent,
+    totalPageNumber: config.flow.pages.length,
+    currentPageNumber: 1,
+  }),
   computed: {
     isOpen: {
       get() {
@@ -106,27 +126,59 @@ export default {
 
       return config.flow.pages[page - 1];
     },
+    style() {
+      return {
+        header: {
+          color: config.flow.carousel.color,
+          backgroundColor: config.flow.carousel.backgroundColor,
+          fontFamily: config.flow.carousel.fontFamily,
+        },
+        footer: {
+          skipButton: {
+            color: config.flow.pages[this.currentPageNumber - 1].footer.skipButton.color,
+            backgroundColor:
+              config.flow.pages[this.currentPageNumber - 1].footer.skipButton.backgroundColor,
+            borderColor:
+              config.flow.pages[this.currentPageNumber - 1].footer.skipButton.borderColor,
+            fontFamily: config.flow.pages[this.currentPageNumber - 1].footer.skipButton.fontFamily,
+          },
+          restartButton: {
+            color: config.flow.pages[this.currentPageNumber - 1].footer.restartButton.color,
+            backgroundColor:
+              config.flow.pages[this.currentPageNumber - 1].footer.restartButton.backgroundColor,
+            borderColor:
+              config.flow.pages[this.currentPageNumber - 1].footer.restartButton.borderColor,
+            fontFamily:
+              config.flow.pages[this.currentPageNumber - 1].footer.restartButton.fontFamily,
+          },
+          backButton: {
+            color: config.flow.pages[this.currentPageNumber - 1].footer.backButton.backgroundColor,
+            backgroundColor: 'rgba(199, 161, 122, 0.16)',
+            border: 'none',
+            fontFamily: config.flow.pages[this.currentPageNumber - 1].footer.backButton.fontFamily,
+            marginRight: '8px',
+          },
+          nextButton: {
+            color: config.flow.pages[this.currentPageNumber - 1].footer.nextButton.color,
+            backgroundColor:
+              config.flow.pages[this.currentPageNumber - 1].footer.nextButton.backgroundColor,
+            borderColor:
+              config.flow.pages[this.currentPageNumber - 1].footer.nextButton.borderColor,
+            fontFamily: config.flow.pages[this.currentPageNumber - 1].footer.nextButton.fontFamily,
+          },
+          submitButton: {
+            color:
+              config.flow.pages[this.currentPageNumber - 1].footer.restartButton.backgroundColor,
+            backgroundColor:
+              config.flow.pages[this.currentPageNumber - 1].footer.restartButton.color,
+            border: 'none',
+            fontFamily:
+              config.flow.pages[this.currentPageNumber - 1].footer.restartButton.fontFamily,
+          },
+        },
+      };
+    },
   },
-  data: () => ({
-    carousel: {
-      focusOnSelect: true,
-      infinite: true,
-      slidesToShow: 3,
-      slidesToScroll: 3,
-    },
-    title: config.flow.carousel.defaultTitle,
-    subtitle: `Total Item ${config.flow.carousel.defaultContent.length}`,
-    itemList: config.flow.carousel.defaultContent,
-    style: {
-      header: {
-        color: config.flow.carousel.color,
-        backgroundColor: config.flow.carousel.backgroundColor,
-        fontFamily: config.flow.carousel.fontFamily,
-      },
-    },
-    totalPageNumber: config.flow.pages.length,
-    currentPageNumber: 1,
-  }),
   methods: {
     goToPrevPage() {
       if (this.currentPageNumber > 1) {
@@ -203,32 +255,5 @@ export default {
 
 .btn:focus {
   box-shadow: none;
-}
-
-.skip-button {
-  color: rgb(199, 161, 122);
-  border: none;
-}
-
-.restart-button {
-  color: rgb(199, 161, 122);
-  border-color: rgb(199, 161, 122);
-}
-
-.back-button {
-  color: rgb(199, 161, 122);
-  background-color: rgba(199, 161, 122, 0.16);
-  border-color: rgba(199, 161, 122, 0.16);
-  margin-right: 8px;
-}
-
-.next-button {
-  background-color: rgb(199, 161, 122);
-  border-color: rgb(199, 161, 122);
-}
-
-.submit-button {
-  background-color: rgb(199, 161, 122);
-  border-color: rgb(199, 161, 122);
 }
 </style>
