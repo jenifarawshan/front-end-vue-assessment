@@ -1,7 +1,12 @@
 <template>
   <b-card-group deck>
-    <div class="selected-card position-relative overflow-hidden" :style="selectedBorderStyle">
+    <div
+      class="position-relative overflow-hidden"
+      :class="{ 'selected-card': isItemAlreadyAdded }"
+      :style="selectedBorderStyle"
+    >
       <div
+        v-if="isItemAlreadyAdded"
         class="position-absolute"
         :style="{
           content: '',
@@ -15,21 +20,24 @@
         }"
       ></div>
 
-      <div class="position-absolute" :style="{ top: '3px', right: '6px', 'z-index': 100 }">
+      <div
+        v-if="isItemAlreadyAdded"
+        class="position-absolute"
+        :style="{ top: '3px', right: '6px', 'z-index': 100 }"
+      >
         <BIconCheckCircleFill :style="{ color: '#fff' }" />
       </div>
+
       <b-card align="center" :style="style">
         <b-img :src="iconUrl" :alt="title"></b-img>
-        <b-card-text
-          v-text="title"
-          class="text-center"
-        />
+        <b-card-text v-text="title" class="text-center" />
       </b-card>
     </div>
   </b-card-group>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { BIconCheckCircleFill } from 'bootstrap-vue';
 
 export default {
@@ -71,6 +79,12 @@ export default {
         borderRadius: '12px',
       },
     };
+  },
+  computed: {
+    ...mapGetters(['getItemList']),
+    isItemAlreadyAdded() {
+      return this.getItemList.find((x) => x.title === this.title);
+    },
   },
 };
 </script>

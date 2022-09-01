@@ -1,24 +1,27 @@
 <template>
   <b-container>
-    <SideBarTextCard
-      v-for="(card, index) in cardList"
-      :key="index"
-      :title="card.title"
-      :description="card.description"
-      :color="cardFontColor"
-      :backgroundColor="cardBackgroundColor"
-      :selectedBorderColor="cardSelectedBorderColor"
-    />
+    <b-row>
+      <b-col cols="12" v-for="(item, index) in itemList" :key="index" @click="selectItem(item)">
+        <SideBarTextCard
+          :title="item.title"
+          :description="item.description"
+          :color="cardFontColor"
+          :backgroundColor="cardBackgroundColor"
+          :selectedBorderColor="cardSelectedBorderColor"
+        />
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
 <script>
+import store from '@/store';
 import SideBarTextCard from '@/components/sidebar/TextCard.vue';
 
 export default {
   name: 'SideBarSingleSelectPage',
   props: {
-    cardList: {
+    itemList: {
       type: Array,
       default: () => [],
     },
@@ -34,6 +37,24 @@ export default {
   },
   components: {
     SideBarTextCard,
+  },
+  methods: {
+    isItemAlreadyAdded(item) {
+      return store.getters.getItemList.find((x) => x.title === item.title);
+    },
+    addItem(item) {
+      store.commit('addItem', item);
+    },
+    removeItem(item) {
+      store.commit('removeItem', item);
+    },
+    selectItem(item) {
+      this.itemList.map((x) => {
+        this.removeItem(x);
+        return true;
+      });
+      this.addItem(item);
+    },
   },
 };
 </script>

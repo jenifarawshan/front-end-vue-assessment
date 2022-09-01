@@ -1,11 +1,11 @@
 <template>
   <b-card :title="title" :style="style" class="position-relative overflow-hidden">
-
     <div
+      v-if="isItemAlreadyAdded"
       class="position-absolute"
       :style="{
         content: '',
-        background: selectedBorderColor,
+        background: isItemAlreadyAdded ? selectedBorderColor : '#E0E0E0',
         width: '100px',
         height: '200px',
         top: '-150px',
@@ -15,7 +15,11 @@
       }"
     ></div>
 
-    <div class="position-absolute" :style="{ top: '3px', right: '6px', 'z-index': 100 }">
+    <div
+      v-if="isItemAlreadyAdded"
+      class="position-absolute"
+      :style="{ top: '3px', right: '6px', 'z-index': 100 }"
+    >
       <BIconCheckCircleFill :style="{ color: '#fff' }" />
     </div>
 
@@ -24,6 +28,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   props: {
     title: {
@@ -53,6 +59,12 @@ export default {
         borderWidth: '1px',
       },
     };
+  },
+  computed: {
+    ...mapGetters(['getItemList']),
+    isItemAlreadyAdded() {
+      return this.getItemList.find((x) => x.title === this.title);
+    },
   },
 };
 </script>

@@ -5,11 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    sideBarOpen: false
+    sideBarOpen: false,
+    itemList: [],
   },
   getters: {
     isSideBarOpen(state) {
       return state.sideBarOpen;
+    },
+    getItemList(state) {
+      return state.itemList;
     }
   },
   mutations: {
@@ -24,7 +28,13 @@ export default new Vuex.Store({
     },
     toggleSideBar(state) {
       state.sideBarOpen = !this.sideBarOpen;
-    }
+    },
+    addItem(state, item) {
+      state.itemList.push(item);
+    },
+    removeItem(state, item) {
+      state.itemList = state.itemList.filter((x) => x.title !== item.title);
+    },
   },
   actions: {
   },

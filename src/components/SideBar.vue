@@ -19,7 +19,7 @@
 
       <SideBarSingleSelectPage
         v-if="currentPage.selectionType === 'single'"
-        :cardList="currentPage.cards"
+        :itemList="currentPage.cards"
         :cardFontColor="currentPage.cardFontColor"
         :cardBackgroundColor="currentPage.cardBackgroundColor"
         :cardSelectedBorderColor="currentPage.selectedBorderColor"
@@ -27,7 +27,7 @@
 
       <SideBarMultiSelectPage
         v-if="currentPage.selectionType === 'multi'"
-        :cardList="currentPage.cards"
+        :itemList="currentPage.cards"
         :cardFontColor="currentPage.cardFontColor"
         :cardBackgroundColor="currentPage.cardBackgroundColor"
         :cardSelectedBorderColor="currentPage.selectedBorderColor"
