@@ -21,6 +21,11 @@
         </b-container>
       </template>
 
+      <b-container class="mt-5 mb-4">
+        <h3 v-text="pageTitle" :style="style.pageTitle" />
+        <p v-text="pageDescription" :style="style.pageDescription" />
+      </b-container>
+
       <SideBarSingleSelectPage
         v-if="currentPage.selectionType === 'single'"
         :itemList="currentPage.cards"
@@ -129,6 +134,12 @@ export default {
 
       return config.flow.pages[page - 1];
     },
+    pageTitle() {
+      return config.flow.pages[this.currentPageNumber - 1].title.text;
+    },
+    pageDescription() {
+      return config.flow.pages[this.currentPageNumber - 1].description.text;
+    },
     style() {
       return {
         header: {
@@ -150,6 +161,14 @@ export default {
           left: '-98px',
           transform: 'rotate(-90deg)',
           zIndex: -1,
+        },
+        pageTitle: {
+          color: config.flow.pages[this.currentPageNumber - 1].title.color,
+          fontFamily: config.flow.pages[this.currentPageNumber - 1].title.fontFamily,
+        },
+        pageDescription: {
+          color: config.flow.pages[this.currentPageNumber - 1].description.color,
+          fontFamily: config.flow.pages[this.currentPageNumber - 1].description.fontFamily,
         },
         footer: {
           skipButton: {
