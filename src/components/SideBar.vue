@@ -13,9 +13,16 @@
             <div
               v-for="(item, index) in itemList"
               :key="index"
-              class="carousel-img-wrapper px-1 overflow-hidden"
+              class="carousel-item-wrapper px-1 overflow-hidden"
             >
-              <b-img :src="item.imageUrl" :alt="item.title" fluid />
+              <b-card
+                overlay
+                :img-src="item.imageUrl"
+                :img-alt="item.title"
+              >
+              <b-card-footer v-text="item.title"></b-card-footer>
+              </b-card>
+
             </div>
           </vue-slick-carousel>
         </b-container>
@@ -279,8 +286,15 @@ export default {
   color: rgb(199, 161, 122);
 }
 
-.carousel-img-wrapper {
-  border-radius: 12px;
+.carousel-item-wrapper .card-body {
+  display: flex;
+  padding: 12px;
+  align-items: flex-end;
+}
+
+.carousel-item-wrapper .card-footer {
+  padding: 0;
+  font-size: 16px;
 }
 
 ::v-deep .b-sidebar-footer {
