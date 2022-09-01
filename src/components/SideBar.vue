@@ -24,6 +24,23 @@
         :cardBackgroundColor="currentPage.cardBackgroundColor"
         :cardSelectedBorderColor="currentPage.selectedBorderColor"
       />
+
+      <template #footer>
+
+        <b-container>
+          <b-row>
+            <b-col>
+              <b-btn lg variant="outline" class="restart-button">Restart</b-btn>
+            </b-col>
+            <b-col class="d-flex justify-content-end">
+              <b-btn lg v-if="currentPageNumber > 1" class="back-button">Back</b-btn>
+              <b-btn lg v-if="currentPageNumber < totalPageNumber" class="next-button">Next</b-btn>
+              <b-btn lg v-else class="submit-button">Submit</b-btn>
+            </b-col>
+          </b-row>
+        </b-container>
+      </template>
+
     </b-sidebar>
   </div>
 </template>
@@ -50,13 +67,13 @@ export default {
       },
     },
     currentPage() {
-      let page = 0;
+      let page = 1;
 
-      if (config.flow.pages.length - 1 >= this.currentPageNumber >= 0) {
+      if (this.totalPageNumber >= this.currentPageNumber >= page) {
         page = this.currentPageNumber;
       }
 
-      return config.flow.pages[page];
+      return config.flow.pages[page - 1];
     },
   },
   data: () => ({
@@ -76,7 +93,8 @@ export default {
         fontFamily: config.flow.carousel.fontFamily,
       },
     },
-    currentPageNumber: 0,
+    totalPageNumber: config.flow.pages.length,
+    currentPageNumber: 1,
   }),
 };
 </script>
@@ -124,5 +142,41 @@ export default {
 
 .carousel-img-wrapper {
   border-radius: 12px;
+}
+
+::v-deep .b-sidebar-footer {
+  height: 70px;
+  padding: 15px 20px;
+  border-top: 1px solid #E0E0E0;
+}
+
+.btn {
+  padding: 8px 32px;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+.restart-button {
+  color: rgb(199, 161, 122);
+  border-color: rgb(199, 161, 122);
+}
+
+.back-button {
+  color: rgb(199, 161, 122);
+  background-color: rgba(199, 161, 122, 0.16);
+  border-color: rgba(199, 161, 122, 0.16);
+  margin-right: 8px;
+}
+
+.next-button {
+  background-color: rgb(199, 161, 122);
+  border-color: rgb(199, 161, 122);
+}
+
+.submit-button {
+  background-color: rgb(199, 161, 122);
+  border-color: rgb(199, 161, 122);
 }
 </style>
