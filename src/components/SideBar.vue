@@ -17,6 +17,14 @@
         </b-container>
       </template>
 
+      <SideBarSingleSelectPage
+        v-if="currentPage.selectionType === 'single'"
+        :cardList="currentPage.cards"
+        :cardFontColor="currentPage.cardFontColor"
+        :cardBackgroundColor="currentPage.cardBackgroundColor"
+        :cardSelectedBorderColor="currentPage.selectedBorderColor"
+      />
+
       <SideBarMultiSelectPage
         v-if="currentPage.selectionType === 'multi'"
         :cardList="currentPage.cards"
@@ -55,12 +63,14 @@
 import store from '@/store';
 import config from '@/../configs/config.json';
 import VueSlickCarousel from 'vue-slick-carousel';
+import SideBarSingleSelectPage from '@/components/sidebar/pages/SingleSelectPage.vue';
 import SideBarMultiSelectPage from '@/components/sidebar/pages/MultiSelectPage.vue';
 
 export default {
   name: 'SideBar',
   components: {
     VueSlickCarousel,
+    SideBarSingleSelectPage,
     SideBarMultiSelectPage,
   },
   computed: {

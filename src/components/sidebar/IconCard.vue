@@ -23,7 +23,6 @@
         <b-card-text
           v-text="title"
           class="text-center"
-          :style="{ 'font-family': 'arial', 'font-weight': '400' }"
         />
       </b-card>
     </div>
@@ -76,7 +75,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card-img-top {
   width: fit-content;
   margin: auto;
